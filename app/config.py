@@ -14,3 +14,6 @@ class Config:
 	@classmethod
 	def get_database_url(cls):
 		return f"postgresql+asyncpg://{cls.DB_USER}:{cls.DB_PASS}@{cls.DB_HOST}:{cls.DB_PORT}/{cls.DB_NAME}"
+
+	PASS_SECRET_KEY: str = os.getenv("PASS_SECRET_KEY")
+	PASS_ALGORITHM: str = os.getenv("PASS_ALGORITHM")
