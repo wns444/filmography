@@ -11,12 +11,14 @@ router = APIRouter(
 
 @router.post("/register")
 async def register_user(user_data: SRegisterUserData):
-	existing_user = await UserDAO.find_one_or_none({"email": user_data.email})
-	if existing_user:
-		raise HTTPException(500)
-	check_username_exist = UserDAO.find_one_or_none({"username": user_data.username})
-	if check_username_exist:
-		raise HTTPException(409)
+	existing_by_email = await UserDAO.find_one_or_none(email=user_data.email)
+	if existing_by_email:
+		raise HTTPException(status_code=409, detail="Email already registered")
+
+	existing_by_username = await UserDAO.find_one_or_none(username=user_data.username)
+	if existing_by_username:
+		raise HTTPException(status_code=409, detail="Username already taken")
+
 	hashed_password = get_password_hash(user_data.password)
 	await UserDAO.insert(
 		email=user_data.email,

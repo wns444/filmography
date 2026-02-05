@@ -34,7 +34,7 @@ async def auth_user(email: EmailStr, password: str) -> str:
 	if not exist_user:
 		raise HTTPException(500)
 
-	if not verify_password(password, get_password_hash(exist_user.hashed_password)):
+	if not verify_password(password, exist_user.hashed_password):
 		raise HTTPException(409)
 
 	return exist_user
