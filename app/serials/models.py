@@ -1,5 +1,6 @@
-from sqlalchemy import Column, Integer, String, Float, ForeignKey
+from sqlalchemy import Column, DateTime, Integer, String, Float, ForeignKey
 from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
 from app.database import Base
 # from slugify import slugify
 
@@ -16,6 +17,9 @@ class Serial(Base):
 	category = Column(String, nullable=False)
 	seasons = relationship("SerialSeason", back_populates="season")
 
+	created_at = Column(DateTime(timezone=True), server_default=func.now())
+	updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+
 
 class SerialSeason(Base):
 	__tablename__ = "serial_seasons"
@@ -29,6 +33,9 @@ class SerialSeason(Base):
 	season = relationship("Serial", back_populates="seasons")
 	chapters = relationship("SerialChapter", back_populates="chapter")
 
+	created_at = Column(DateTime(timezone=True), server_default=func.now())
+	updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+
 
 class SerialChapter(Base):
 	__tablename__ = "serial_chapters"
@@ -40,3 +47,6 @@ class SerialChapter(Base):
 	description = Column(String, nullable=True)
 
 	chapter = relationship("SerialSeason", back_populates="chapters")
+
+	created_at = Column(DateTime(timezone=True), server_default=func.now())
+	updated_at = Column(DateTime(timezone=True), onupdate=func.now())
