@@ -5,7 +5,7 @@ from app.config import Config
 
 database_url = Config.get_database_url()
 engine = create_async_engine(database_url)
-async_session_maker = async_sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
+async_session_maker = async_sessionmaker(engine, class_=AsyncSession, autoflush=True, expire_on_commit=False)
 
 
 class Base(DeclarativeBase):
