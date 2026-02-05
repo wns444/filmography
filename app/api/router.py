@@ -43,7 +43,7 @@ async def add_film(serial_data: FilmS):
 
 @router_add.post("/comment")
 async def add_comment(comment: CommentS):
-	return await CommentDAO.insert(**comment)
+	await CommentDAO.insert(**comment)
 
 
 # DELETE ROUTES
