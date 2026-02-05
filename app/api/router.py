@@ -1,6 +1,8 @@
 from typing import Optional
 from fastapi import APIRouter
 
+from app.comments.dao import CommentDAO
+from app.comments.schemas import CommentS
 from app.films.dao import FilmDAO
 from app.films.schemas import FilmS
 from app.serials.dao import SerialDAO
@@ -37,6 +39,11 @@ async def add_serial(serial_data: SerialS):
 @router_add.post("/film")
 async def add_film(serial_data: FilmS):
 	await FilmDAO.insert(**serial_data.model_dump())
+
+
+@router_add.post("/comment")
+async def add_comment(comment: CommentS):
+	return await CommentDAO.insert(**comment)
 
 
 # DELETE ROUTES
