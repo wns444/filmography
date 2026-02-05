@@ -9,9 +9,7 @@ class BaseDAO:
 	@classmethod
 	async def find_one_or_none(cls, **filters):
 		async with async_session_maker() as session:
-			query = select(cls.model)
-			if filters:
-				query.filter_by(**filters)
+			query = select(cls.model).filter_by(**filters)
 			result = await session.execute(query)
 			return result.scalar_one_or_none()
 
@@ -21,8 +19,8 @@ class BaseDAO:
 			query = select(cls.model)
 			if filters:
 				query.filter_by(**filters)
-			result = await session.execute(query)
-			return result.scalars().all()
+			all_results = await session.execute(query)
+			return all_results.scalars().all()
 
 	@classmethod
 	async def insert(cls, **data):
