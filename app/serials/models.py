@@ -2,7 +2,6 @@ from sqlalchemy import Column, DateTime, Integer, String, Float, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from app.database import Base
-# from slugify import slugify
 
 
 class Serial(Base):
@@ -10,12 +9,13 @@ class Serial(Base):
 	__tablename__ = "serials"
 
 	id = Column(Integer, primary_key=True, autoincrement=True)
-	slug = Column(String)
+	slug = Column(String, unique=True, index=True)
 	name = Column(String, nullable=False)
 	description = Column(String, nullable=True)
 	rating = Column(Float)
 	category = Column(String, nullable=False)
-	seasons = relationship("SerialSeason", back_populates="season")
+
+	seasons = relationship("SerialSeason", back_populates="serial", cascade="all, delete-orphan", lazy="selectin")
 
 	created_at = Column(DateTime(timezone=True), server_default=func.now())
 	updated_at = Column(DateTime(timezone=True), onupdate=func.now())
@@ -30,8 +30,8 @@ class SerialSeason(Base):
 	name = Column(String, nullable=True)
 	description = Column(String, nullable=True)
 
-	season = relationship("Serial", back_populates="seasons")
-	chapters = relationship("SerialChapter", back_populates="chapter")
+	serial = relationship("Serial", back_populates="seasons", lazy="joined")
+	chapters = relationship("SerialChapter", back_populates="season", cascade="all, delete-orphan", lazy="selectin")
 
 	created_at = Column(DateTime(timezone=True), server_default=func.now())
 	updated_at = Column(DateTime(timezone=True), onupdate=func.now())
@@ -46,7 +46,7 @@ class SerialChapter(Base):
 	name = Column(String, nullable=True)
 	description = Column(String, nullable=True)
 
-	chapter = relationship("SerialSeason", back_populates="chapters")
+	season = relationship("SerialSeason", back_populates="chapters", lazy="joined")
 
 	created_at = Column(DateTime(timezone=True), server_default=func.now())
 	updated_at = Column(DateTime(timezone=True), onupdate=func.now())
