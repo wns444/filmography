@@ -1,15 +1,13 @@
 from fastapi import FastAPI
 
-from app.users.router import router as users_router
-from app.films.router import router as films_router
-from app.serials.router import router as serials_router
 from app.api.router import router as router_api
+from app.users.router import router as router_user
+
+
 app = FastAPI()
 
-app.include_router(users_router)
-app.include_router(films_router)
-app.include_router(serials_router)
 app.include_router(router_api)
+app.include_router(router_user)
 
 
 @app.get("/")
