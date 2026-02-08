@@ -1,13 +1,19 @@
 from datetime import datetime, timedelta, timezone
-from fastapi import HTTPException
 from passlib.context import CryptContext
 from jose import jwt
 from pydantic import EmailStr
+from fastapi import Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordBearer
+
+from typing import Optional
 
 from app.config import Config
 from app.users.dao import UserDAO
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+# OAuth2 scheme for Authorization: Bearer <token>
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
 
 def get_password_hash(password: str) -> str:
@@ -38,3 +44,18 @@ async def auth_user(email: EmailStr, password: str) -> str:
 		raise HTTPException(409)
 
 	return exist_user
+
+
+async def get_current_user(token: str = Depends(oauth2_scheme)):
+	try:
+		payload = jwt.decode(token, Config.PASS_SECRET_KEY, algorithms=[Config.PASS_ALGORITHM])
+		user_id: Optional[int] = payload.get("sub")
+		if user_id is None:
+			raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
+	except Exception:
+		raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
+
+	user = await UserDAO.find_one_or_none(id=user_id)
+	if not user:
+		raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User not found")
+	return user
