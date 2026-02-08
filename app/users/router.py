@@ -20,7 +20,7 @@ async def register_user(user_data: SRegisterUserData):
 		raise HTTPException(status_code=409, detail="Username already taken")
 
 	hashed_password = get_password_hash(user_data.password)
-	await UserDAO.insert(
+	await UserDAO.create(
 		email=user_data.email,
 		username=user_data.username,
 		hashed_password=hashed_password,
