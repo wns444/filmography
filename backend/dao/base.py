@@ -1,7 +1,7 @@
 from typing import Any, Dict, List, Optional
 from sqlalchemy import select
 
-from app.database import async_session_maker
+from backend.database import async_session_maker
 
 
 class BaseDAO:

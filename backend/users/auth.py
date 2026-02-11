@@ -7,8 +7,8 @@ from fastapi.security import OAuth2PasswordBearer
 
 from typing import Optional
 
-from app.config import Config
-from app.users.dao import UserDAO
+from backend.config import Config
+from backend.users.dao import UserDAO
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 

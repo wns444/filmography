@@ -2,7 +2,7 @@ import enum
 from sqlalchemy import Column, DateTime, ForeignKey, Integer, String
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
-from app.database import Base
+from backend.database import Base
 
 
 class ContentType(enum.IntEnum):

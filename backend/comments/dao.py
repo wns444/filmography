@@ -1,10 +1,10 @@
 from typing import Union
 
 from sqlalchemy import select
-from app.comments.models import Comment, ContentType
-from app.dao.base import BaseDAO
-from app.database import async_session_maker
-from app.users.models import User
+from backend.comments.models import Comment, ContentType
+from backend.dao.base import BaseDAO
+from backend.database import async_session_maker
+from backend.users.models import User
 
 
 class CommentDAO(BaseDAO):

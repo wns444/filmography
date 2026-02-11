@@ -1,8 +1,8 @@
 from sqlalchemy import select
 from sqlalchemy.orm import selectinload
 
-from app.dao.base import BaseDAO
-from app.serials.models import Serial, SerialSeason, SerialChapter
+from backend.dao.base import BaseDAO
+from backend.serials.models import Serial, SerialSeason, SerialChapter
 
 
 class SerialDAO(BaseDAO):
@@ -20,7 +20,7 @@ class SerialDAO(BaseDAO):
 	# helper to reuse session creation if needed elsewhere
 	@classmethod
 	def _get_session(cls):
-		from app.database import async_session_maker
+		from backend.database import async_session_maker
 
 		return async_session_maker()
 

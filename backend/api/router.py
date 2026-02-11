@@ -1,11 +1,11 @@
 from typing import Optional
-from fastapi import APIRouter, HTTPException, status, Response, Depends
+from fastapi import APIRouter, HTTPException, status, Depends
 
-from app.films.dao import FilmDAO
-from app.films.schemas import SearchFilmS, FilmCreate, FilmUpdate, FilmOut
-from app.serials.dao import SerialDAO
-from app.serials.schemas import SerialS, SerialOut, SerialCreate, SerialUpdate
-from app.serials.schemas import (
+from backend.films.dao import FilmDAO
+from backend.films.schemas import SearchFilmS, FilmCreate, FilmUpdate, FilmOut
+from backend.serials.dao import SerialDAO
+from backend.serials.schemas import SerialS, SerialOut, SerialCreate, SerialUpdate
+from backend.serials.schemas import (
 	SerialSeasonCreate,
 	SerialSeasonUpdate,
 	SerialChapterCreate,
@@ -13,11 +13,11 @@ from app.serials.schemas import (
 	SerialSeasonS,
 	SerialChapterS,
 )
-from app.serials.dao import SerialSeasonDAO, SerialChapterDAO
-from app.comments.dao import CommentDAO
-from app.comments.models import ContentType
-from app.comments.schemas import CommentS, CommentUpdate, CommentOut
-from app.api.deps import get_current_user
+from backend.serials.dao import SerialSeasonDAO, SerialChapterDAO
+from backend.comments.dao import CommentDAO
+from backend.comments.models import ContentType
+from backend.comments.schemas import CommentS, CommentUpdate, CommentOut
+from backend.api.deps import get_current_user
 
 
 router = APIRouter(prefix="/api/v1", tags=["API"])
@@ -142,7 +142,6 @@ async def delete_serial(slug: str):
 	if not ok:
 		raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Serial not found")
 	return None
-
 
 
 # Seasons CRUD

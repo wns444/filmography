@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Response
-from app.users.auth import auth_user, create_access_token, get_password_hash
-from app.users.dao import UserDAO
-from app.users.schemas import SLoginUserData, SRegisterUserData
+from backend.users.auth import auth_user, create_access_token, get_password_hash
+from backend.users.dao import UserDAO
+from backend.users.schemas import SLoginUserData, SRegisterUserData
 
 router = APIRouter(
 	prefix='/auth',

@@ -2,7 +2,7 @@ import pytest
 from types import SimpleNamespace
 from httpx import AsyncClient
 
-from app.main import app
+from backend.main import app
 
 
 @pytest.mark.asyncio
