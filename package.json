@@ -1,0 +1,13 @@
+{
+  "name": "cinema-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "preview": "cd frontend && npm run preview"
+  },
+  "dependencies": {
+    "swiper": "^12.1.0"
+  }
+}
